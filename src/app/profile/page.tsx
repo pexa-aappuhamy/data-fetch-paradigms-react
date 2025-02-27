@@ -1,9 +1,9 @@
-import { ProfileCard } from "@/feature/profile/profile-card";
+import { Profile } from "@/feature/profile/profile";
 
-export default function Profile() {
+export default function ProfilePage() {
     return (
         <>
-            <ProfileCard />
+            <Profile userId={}/>
         </>
     )
 }
