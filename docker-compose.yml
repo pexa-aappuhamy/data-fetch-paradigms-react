@@ -1,0 +1,13 @@
+services:
+  db:
+    image: 'postgres:latest'
+    hostname: postgres
+    container_name: df-paradigms-react-db
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: testing123
+    volumes:
+      - df_paradigms_react_db_pg_data:/var/lib/postgresql/data
+volumes:
+  df_paradigms_react_db_pg_data:
