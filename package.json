@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "drizzle-kit push",
-    "db:seed": "tsx src/db/seed.ts",
-    "drizzle-studio": "drizzle-kit studio"
+    "db:seed": "tsx --env-file=.env src/db/seed.ts",
+    "drizzle-studio": "drizzle-kit studio",
+    "temp": "tsx temp.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.40.0",
