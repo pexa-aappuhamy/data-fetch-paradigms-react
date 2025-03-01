@@ -4,13 +4,6 @@ import { users } from "@/db/schema";
 import { eq } from 'drizzle-orm';
 import { UserProfile } from "./user-profile";
 
-export default function ProfilePageUseEffect() {
-    const userDetails = fetchUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
-    return (
-        <UserProfile userDetails={userDetails}/>
-    );
-};
-
 const fetchUserDetails = (userId: string) => {
     const db = drizzle(process.env.DATABASE_URL!);
     return new Promise<User[]>((resolve) => {
@@ -22,6 +15,13 @@ const fetchUserDetails = (userId: string) => {
         }, 1500);
     });
 }
+
+export default function ProfilePageUseEffect() {
+    const userDetails = fetchUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
+    return (
+        <UserProfile userDetails={userDetails}/>
+    );
+};
 
 
 

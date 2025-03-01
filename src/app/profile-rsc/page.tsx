@@ -3,15 +3,16 @@ import { users } from "@/db/schema";
 import { eq } from 'drizzle-orm';
 import { cache } from 'react'
 
-const db = drizzle({
-    connection: process.env.DATABASE_URL!,
-    logger: true
-});
+
 
 const queryUserDetails = async (userId: string) => {
+    const db = drizzle({
+        connection: process.env.DATABASE_URL!,
+        logger: true
+    });
     return await db.select()
     .from(users)
-    .where(eq(users.id, userId));;
+    .where(eq(users.id, userId));
 };
 
 export default function ProfilePageRSC() {
@@ -24,14 +25,14 @@ export default function ProfilePageRSC() {
 };
 
 const UserProfile = async () => {
-    const userDetails = await queryUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
+    const [userDetails] = await queryUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
     return (
         JSON.stringify(userDetails)
     )
 };
 
 const UserProfile2 = async () => {
-    const userDetails = await queryUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
+    const [userDetails] = await queryUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
     return (
         JSON.stringify(userDetails)
     )

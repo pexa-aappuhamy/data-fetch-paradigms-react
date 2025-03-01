@@ -3,15 +3,6 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { users } from "@/db/schema";
 import { eq } from 'drizzle-orm';
 
-export default function ProfilePageSuspense() {
-    const userDetails = fetchUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <UserProfile userDetails={userDetails}/>
-        </Suspense>
-    );
-};
-
 const fetchUserDetails = (userId: string) => {
     const db = drizzle(process.env.DATABASE_URL!);
     return new Promise<User[]>((resolve) => {
@@ -24,8 +15,17 @@ const fetchUserDetails = (userId: string) => {
     });
 }
 
+export default function ProfilePageSuspense() {
+    const userDetails = fetchUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <UserProfile userDetails={userDetails}/>
+        </Suspense>
+    );
+};
+
 const UserProfile = ({userDetails}: {userDetails: Promise<User[]>}) => {
-    const user = use(userDetails)[0];
+    const [user] = use(userDetails);
     return (
         JSON.stringify(user)
     )

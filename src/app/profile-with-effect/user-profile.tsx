@@ -5,8 +5,8 @@ export const UserProfile = ({userDetails}: {userDetails: Promise<User[]>}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState<User | null>(null);
     useEffect(() => {
-        userDetails.then((result) => {
-            setUser(result[0]);
+        userDetails.then(([result]) => {
+            setUser(result);
             setIsLoading(false);
         });
     },[]);
