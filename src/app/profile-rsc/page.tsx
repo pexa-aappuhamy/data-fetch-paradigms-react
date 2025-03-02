@@ -1,9 +1,9 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { users } from "@/db/schema";
 import { eq } from 'drizzle-orm';
-import { cache } from 'react'
-
-
+import { cache, Suspense } from 'react'
+import { ProfileCard } from "@/feature/profile/profile";
+import { ProfileSkeleton } from "@/feature/profile/profile-skeleton";
 
 const queryUserDetails = async (userId: string) => {
     const db = drizzle({
@@ -17,23 +17,23 @@ const queryUserDetails = async (userId: string) => {
 
 export default function ProfilePageRSC() {
     return (
-        <>
+        <Suspense fallback={<ProfileSkeleton />}>
         <UserProfile />
-        <UserProfile2 />
-        </>
+        <UserProfileVariant />
+        </Suspense>
     )
 };
 
 const UserProfile = async () => {
     const [userDetails] = await queryUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
     return (
-        JSON.stringify(userDetails)
+        <ProfileCard userDetails={userDetails} />
     )
 };
 
-const UserProfile2 = async () => {
+const UserProfileVariant = async () => {
     const [userDetails] = await queryUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
     return (
-        JSON.stringify(userDetails)
+        <ProfileCard userDetails={userDetails} variant="small"/>
     )
 };

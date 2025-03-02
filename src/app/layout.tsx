@@ -38,9 +38,9 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <Navigation/>
-            <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-              <SidebarTrigger/>
-            {children}
+            <SidebarTrigger/>
+            <main className="flex flex-col items-center justify-center w-full h-full space-y-2">
+              {children}
             </main>
           </SidebarProvider>
         </ThemeProvider>

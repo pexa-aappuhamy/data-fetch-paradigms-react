@@ -12,6 +12,7 @@ async function main() {
             users: {
                 count: 1,
                 columns: {
+                    id: funcs.valuesFromArray({values:["3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf"]}),
                     firstName: funcs.valuesFromArray({values:["Andrew"]}),
                     lastName: funcs.valuesFromArray({values:["Appuhamy"]}),
                     country: funcs.valuesFromArray({values:["Australia"]}),

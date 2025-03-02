@@ -17,9 +17,9 @@ const fetchUserDetails = (userId: string) => {
 }
 
 export default function ProfilePageUseEffect() {
-    const userDetails = fetchUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
+    const userDetailsPromise = fetchUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
     return (
-        <UserProfile userDetails={userDetails}/>
+        <UserProfile userDetailsPromise={userDetailsPromise}/>
     );
 };
 

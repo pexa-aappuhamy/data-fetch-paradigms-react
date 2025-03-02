@@ -1,33 +1,29 @@
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { users } from "@/db/schema";
 import { eq } from 'drizzle-orm';
+import { UserProfile } from "./user-profile";
 
-const fetchUserDetails = (userId: string) => {
-    const db = drizzle(process.env.DATABASE_URL!);
-    return new Promise<User[]>((resolve) => {
-        setTimeout(async () => {
-            const result = await db.select()
-                .from(users)
-                .where(eq(users.id, userId)).execute();
-            resolve(result);
-        }, 1500);
+import { ProfileSkeleton } from "@/feature/profile/profile-skeleton";
+
+const fetchUserDetails = async (userId: string) => {
+    const db = drizzle({
+        connection: process.env.DATABASE_URL!,
+        logger: true
     });
-}
+    return await db.select()
+    .from(users)
+    .where(eq(users.id, userId));
+};
 
 export default function ProfilePageSuspense() {
-    const userDetails = fetchUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
+    const userDetailsPromise = fetchUserDetails('3e0bb3d0-2074-4a1e-6263-d13dd10cb0cf');
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <UserProfile userDetails={userDetails}/>
+        <Suspense fallback={<ProfileSkeleton />}>
+            <UserProfile userDetailsPromise={userDetailsPromise}/>
         </Suspense>
     );
 };
 
-const UserProfile = ({userDetails}: {userDetails: Promise<User[]>}) => {
-    const [user] = use(userDetails);
-    return (
-        JSON.stringify(user)
-    )
-};
+
 

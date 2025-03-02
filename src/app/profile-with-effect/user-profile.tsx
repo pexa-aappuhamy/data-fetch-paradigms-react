@@ -1,21 +1,21 @@
 'use client'
+import { ProfileCard } from "@/feature/profile/profile";
+import { ProfileSkeleton } from "@/feature/profile/profile-skeleton";
 import { useState, useEffect } from "react";
 
-export const UserProfile = ({userDetails}: {userDetails: Promise<User[]>}) => {
+export const UserProfile = ({userDetailsPromise} : {userDetailsPromise: Promise<User[]>}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState<User | null>(null);
     useEffect(() => {
-        userDetails.then(([result]) => {
+        userDetailsPromise.then(([result]) => {
             setUser(result);
             setIsLoading(false);
         });
     },[]);
     
     if (isLoading) {
-        return <div>Loading...</div>
+        return <ProfileSkeleton />;
     }
 
-    return (
-        JSON.stringify(user)
-    )
+    return <ProfileCard userDetails={user as User} />;
 };
